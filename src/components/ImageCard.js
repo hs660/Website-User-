@@ -20,7 +20,7 @@ const handleLike = async () => {
 
   const token = await auth.currentUser.getIdToken();
   try {
-    const res = await fetch(`${Base_URL}api/images/like/${image._id}`, {
+    const res = await fetch(`${Base_URL}/api/images/like/${image._id}`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -22,7 +22,7 @@ export default function Home() {
       setLoading(true);
 
       const res = await axios.get(
-        `${Base_URL}api/images?sort=${sort}`
+        `${Base_URL}/api/images?sort=${sort}`
       );
 
       setImages(Array.isArray(res.data) ? res.data : []);
