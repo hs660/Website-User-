@@ -25,7 +25,7 @@ useEffect(() => {
     const token = await user.getIdToken();
 
     const res = await axios.get(
-      `${Base_URL}/images/liked`,
+      `${Base_URL}api/images/liked`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

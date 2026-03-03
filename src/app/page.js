@@ -6,7 +6,7 @@ import ImageCard from "@/components/ImageCard";
 import LikePage from "./liked/page";
 import axios from "axios"
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL
+const Base_URL= process.env.NEXT_PUBLIC_API_URL
 
 export default function Home() {
   const [images, setImages] = useState([]);
@@ -22,7 +22,7 @@ export default function Home() {
       setLoading(true);
 
       const res = await axios.get(
-        `${BASE_URL}/images?sort=${sort}`
+        `${Base_URL}api/images?sort=${sort}`
       );
 
       setImages(Array.isArray(res.data) ? res.data : []);

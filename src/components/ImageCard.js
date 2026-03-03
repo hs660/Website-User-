@@ -7,6 +7,7 @@ import { getAuth } from "firebase/auth";
 
 export default function ImageCard({ image }) {
   const [likeCount, setLikeCount] = useState(image?.likesCount || 0);
+  const Base_URL= process.env.NEXT_PUBLIC_API_URL
 
 const handleLike = async () => {
   const auth = getAuth();
@@ -19,7 +20,7 @@ const handleLike = async () => {
 
   const token = await auth.currentUser.getIdToken();
   try {
-    const res = await fetch(`http://localhost:4000/api/images/like/${image._id}`, {
+    const res = await fetch(`${Base_URL}api/images/like/${image._id}`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
     });
