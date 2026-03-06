@@ -51,13 +51,6 @@ export default function LikePage() {
     return <p className="text-center mt-10">Loading...</p>;
   }
 
-  if (!user) {
-    return (
-      <div className="text-center mt-10 text-red-500 font-semibold">
-        Please login to see liked images
-      </div>
-    );
-  }
 
   return (
     <section className="py-10">
