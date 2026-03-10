@@ -51,6 +51,10 @@ export default function LikePage() {
     return <p className="text-center mt-10">Loading...</p>;
   }
 
+  if (!user) {
+    return ;
+    
+  }
 
   return (
     <section className="py-10">
