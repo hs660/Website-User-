@@ -42,12 +42,12 @@ export default function Home() {
 
         {/* 🔽 Sorting Dropdown */}
         <div className="flex justify-between items-center mt-6">
-          <h1 className="text-2xl font-bold">Image Gallery</h1>
+          <h1 className="text-2xl font-bold text-slate-900">Image Gallery</h1>
 
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="border px-3 py-2 rounded-lg"
+            className="border px-3 py-2 rounded-lg text-slate-900"
           >
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>

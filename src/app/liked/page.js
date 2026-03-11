@@ -52,8 +52,8 @@ export default function LikePage() {
   }
 
   if (!user) {
-    return ;
-    
+    return null;
+
   }
 
   return (

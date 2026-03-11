@@ -45,10 +45,10 @@ export default function LoginButton() {
         </>
       ) : (
         <div className="flex">
-        <h1 className="text-slate-600 text-2xl mr-12">
+        <h1 className="text-slate-600 text-sm md:text-2xl mr-12">
         Create Account with Google 
         </h1>
-        <button className="bg-blue-500 p-2 rounded-2xl w-22 text-white hover:bg-blue-700" onClick={handleLogin}>Login</button>
+        <button className="bg-blue-500 p-1 md:p-2 rounded-2xl w-22 text-white hover:bg-blue-700" onClick={handleLogin}>Login</button>
         </div>
       )}
     </div>
