@@ -1,76 +1,108 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import ImageCard from "@/components/ImageCard";
+import { getAuth } from "firebase/auth";
 import axios from "axios";
+import ImageCard from "@/components/ImageCard";
 
-export default function LikePage() {
-  const [likeImages, setLikeImages] = useState([]);
-  const [user, setUser] = useState(null);
+const Base_URL = process.env.NEXT_PUBLIC_API_URL;
+
+export default function LikedPage() {
+
+  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const Base_URL = process.env.NEXT_PUBLIC_API_URL;
-
   useEffect(() => {
-    const auth = getAuth();
+    fetchLikedImages();
+  }, []);
 
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (!currentUser) {
-        setUser(null);
-        setLoading(false);
+  const fetchLikedImages = async () => {
+
+    try {
+
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        setImages([]);
         return;
       }
 
-      setUser(currentUser);
+      const token = await user.getIdToken();
 
-      try {
-        const token = await currentUser.getIdToken();
-
-        const res = await axios.get(
-          `${Base_URL}/api/images/liked`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+      const res = await axios.get(
+        `${Base_URL}/api/images/liked`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        );
+        }
+      );
 
-        setLikeImages(res.data);
-      } catch (error) {
-        console.log("Error fetching liked images:", error);
-      }
+     
+      const likedImages = Array.isArray(res.data)
+        ? res.data.map(img => ({
+            ...img,
+            isLiked: true
+          }))
+        : [];
 
+      setImages(likedImages);
+
+    } catch (error) {
+      console.error("Error fetching liked images:", error);
+    } finally {
       setLoading(false);
-    });
+    }
+  };
 
-    return () => unsubscribe();
-  }, []);
 
+  const handleUnlike = (imageId) => {
+    setImages(prev =>
+      prev.filter(img => img._id !== imageId)
+    );
+  };
+
+  /* Loading UI */
   if (loading) {
-    return <p className="text-center mt-10">Loading...</p>;
-  }
-
-  if (!user) {
-    return null;
-
+    return (
+      <div className="flex justify-center items-center h-[60vh]">
+        <p className="text-slate-900 text-lg">
+          Loading liked images...
+        </p>
+      </div>
+    );
   }
 
   return (
-    <section className="py-10">
-      <div className="max-w-7xl mx-auto px-4">
-        <h1 className="text-2xl font-bold mb-6">Liked Images</h1>
+    <section className="max-w-7xl mx-auto py-10 px-4">
 
-        {likeImages.length === 0 ? (
-          <p className="text-gray-500 text-lg">No Like Image</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {likeImages.map((img) => (
-              <ImageCard key={img._id} image={img} />
-            ))}
-          </div>
-        )}
+      <div className="mb-8 text-center">
+        <p className="text-3xl font-bold text-gray-500 mt-2">
+          ❤️ Your Liked Images
+        </p>
       </div>
+
+      {images.length === 0 ? (
+        <p className="text-slate-800 text-center mt-10">
+          You haven't liked any images yet.
+        </p>
+      ) : (
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+          {images.map((img) => (
+            <ImageCard
+              key={img._id}
+              image={img}
+              onUnlike={handleUnlike}
+            />
+          ))}
+
+        </div>
+
+      )}
+
     </section>
   );
 }

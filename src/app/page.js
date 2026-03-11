@@ -1,72 +1,130 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import LoginButton from "@/components/LoginButton";
+import axios from "axios";
 import ImageCard from "@/components/ImageCard";
-import LikePage from "./liked/page";
-import axios from "axios"
+import { useSearchParams } from "next/navigation";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-const Base_URL= process.env.NEXT_PUBLIC_API_URL
+export default function HomePage() {
 
-export default function Home() {
   const [images, setImages] = useState([]);
-  const [sort, setSort] = useState("newest"); // 🔥 sorting state
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchImages();
-  }, [sort]); // 🔥 sort change hone par refetch
+  const searchParams = useSearchParams();
+  const sort = searchParams.get("sort") || "home";
 
-  const fetchImages = async () => {
-    try {
-      setLoading(true);
+  const Base_URL = process.env.NEXT_PUBLIC_API_URL;
+  const getTitle = () => {
 
-      const res = await axios.get(
-        `${Base_URL}/api/images?sort=${sort}`
-      );
+  if (sort === "popular") {
+    return (
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-bold text-gray-800">
+           Popular Images
+        </h1>
+        <p className="text-gray-500 mt-2">
+          Most liked images by the community
+        </p>
+      </div>
+    );
+  }
 
-      setImages(Array.isArray(res.data) ? res.data : []);
+  if (sort === "latest") {
+    return (
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-bold text-gray-800">
+          ✨ Latest Uploads
+        </h1>
+        <p className="text-gray-500 mt-2">
+          See the newest images added recently
+        </p>
+      </div>
+    );
+  }
 
-    } catch (err) {
-      console.error("Fetch images error:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (sort === "oldest") {
+    return (
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-bold text-gray-800">
+          📷 Oldest Images
+        </h1>
+        <p className="text-gray-500 mt-2">
+          Browse images uploaded earlier
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <section className="bg-gray-100 min-h-screen py-10">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="mb-8 text-center">
+      <h1 className="text-3xl font-bold text-gray-800">
+        Discover Beautiful Images
+      </h1>
+      <p className="text-gray-500 mt-2">
+        Browse amazing photos uploaded by our community
+      </p>
+    </div>
+  );
+};
 
-        <LoginButton />
+  useEffect(() => {
 
-        {/* 🔽 Sorting Dropdown */}
-        <div className="flex justify-between items-center mt-6">
-          <h1 className="text-2xl font-bold text-slate-900">Image Gallery</h1>
+    const auth = getAuth();
 
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value)}
-            className="border px-3 py-2 rounded-lg text-slate-900"
-          >
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
-            <option value="popular">Most Popular</option>
-          </select>
-        </div>
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
 
-        {/* 🔄 Loader */}
-        {loading ? (
-          <p className="mt-10 text-center">Loading...</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
-            {images.map((img) => (
-              <ImageCard key={img._id} image={img} />
-            ))}
-          </div>
-        )}
-        <LikePage/>
+      try {
+
+        setLoading(true);
+
+        let headers = {};
+
+        if (user) {
+          const token = await user.getIdToken();
+          headers.Authorization = `Bearer ${token}`;
+        }
+
+        const res = await axios.get(
+          `${Base_URL}/api/images?sort=${sort}`,
+          { headers }
+        );
+
+        setImages(res.data);
+
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
+      }
+
+    });
+
+    return () => unsubscribe();
+
+  }, [sort]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[60vh]">
+        <p className="text-slate-900 text-lg">Loading images...</p>
       </div>
+    );
+  }
+
+  return (
+    <section className="max-w-7xl mx-auto py-10 px-4">
+      <h1 className="text-2xl font-bold mb-6">
+        {getTitle()}
+      </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+        {images.map((img) => (
+          <ImageCard key={img._id} image={img} />
+        ))}
+
+      </div>
+
     </section>
   );
 }
