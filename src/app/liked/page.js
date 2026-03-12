@@ -13,20 +13,18 @@ export default function LikedPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchLikedImages();
-  }, []);
 
-  const fetchLikedImages = async () => {
+  const auth = getAuth();
+
+  const unsubscribe = auth.onAuthStateChanged(async (user) => {
+
+    if (!user) {
+      setImages([]);
+      setLoading(false);
+      return;
+    }
 
     try {
-
-      const auth = getAuth();
-      const user = auth.currentUser;
-
-      if (!user) {
-        setImages([]);
-        return;
-      }
 
       const token = await user.getIdToken();
 
@@ -39,12 +37,11 @@ export default function LikedPage() {
         }
       );
 
-
       const likedImages = Array.isArray(res.data)
         ? res.data.map(img => ({
-          ...img,
-          isLiked: true
-        }))
+            ...img,
+            isLiked: true
+          }))
         : [];
 
       setImages(likedImages);
@@ -54,7 +51,12 @@ export default function LikedPage() {
     } finally {
       setLoading(false);
     }
-  };
+
+  });
+
+  return () => unsubscribe();
+
+}, []);
 
 
   // const handleUnlike = (imageId) => {
