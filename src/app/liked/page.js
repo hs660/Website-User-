@@ -39,12 +39,12 @@ export default function LikedPage() {
         }
       );
 
-     
+
       const likedImages = Array.isArray(res.data)
         ? res.data.map(img => ({
-            ...img,
-            isLiked: true
-          }))
+          ...img,
+          isLiked: true
+        }))
         : [];
 
       setImages(likedImages);
@@ -57,11 +57,11 @@ export default function LikedPage() {
   };
 
 
-  const handleUnlike = (imageId) => {
-    setImages(prev =>
-      prev.filter(img => img._id !== imageId)
-    );
-  };
+  // const handleUnlike = (imageId) => {
+  //   setImages(prev =>
+  //     prev.filter(img => img._id !== imageId)
+  //   );
+  // };
 
   /* Loading UI */
   if (loading) {
@@ -77,10 +77,10 @@ export default function LikedPage() {
   return (
     <section className="max-w-7xl mx-auto py-10 px-4">
 
-      <div className="mb-8 text-center">
-        <p className="text-3xl font-bold text-gray-500 mt-2">
-           Your Liked Images
-        </p>
+      <div className="mb-1 text-center">
+        <h1 className="text-3xl font-bold text-gray-800">
+          Your Liked Images
+        </h1>
       </div>
 
       {images.length === 0 ? (
@@ -88,17 +88,19 @@ export default function LikedPage() {
           You haven't liked any images yet.
         </p>
       ) : (
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-          {images.map((img) => (
-            <ImageCard
-              key={img._id}
-              image={img}
-              onUnlike={handleUnlike}
-            />
-          ))}
-
+        <div className="mb-8 text-center">
+          <p className="text-gray-500 mb-4">
+            All the images you loved are saved here.
+            Revisit your favorite moments anytime.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {images.map((img) => (
+              <ImageCard
+                key={img._id}
+                image={img}
+              />
+            ))}
+          </div>
         </div>
 
       )}

@@ -82,20 +82,20 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 flex flex-col gap-4 text-gray-700 font-medium">
 
-          <Link href="/" onClick={() => setMenuOpen(false)} className="hover:text-red-500 active:text-red-500 active:scale-95 transition">
+          <Link href="/" onClick={() => setMenuOpen(false)} className="py-1 hover:text-red-500 active:text-red-500">
             Home
           </Link>
 
-          <Link href="/?sort=popular" onClick={() => setMenuOpen(false)} className="hover:text-red-500 active:text-red-500 active:scale-95 transition">
+          <Link href="/?sort=popular" onClick={() => setMenuOpen(false)} className="py-1 hover:text-red-500 active:text-red-500">
             Popular
           </Link>
 
-          <Link href="/?sort=latest" onClick={() => setMenuOpen(false)} className="hover:text-red-500 active:text-red-500 active:scale-95 transition">
+          <Link href="/?sort=latest" onClick={() => setMenuOpen(false)} className="py-1 hover:text-red-500 active:text-red-500">
             Latest
           </Link>
 
           {user && (
-            <Link href="/liked" onClick={() => setMenuOpen(false)} className="hover:text-red-500 active:text-red-500 active:scale-95 transition">
+            <Link href="/liked" onClick={() => setMenuOpen(false)} className="py-1 hover:text-red-500 active:text-red-500">
               Liked
             </Link>
           )}
