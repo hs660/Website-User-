@@ -79,7 +79,7 @@ export default function LikedPage() {
 
       <div className="mb-8 text-center">
         <p className="text-3xl font-bold text-gray-500 mt-2">
-          ❤️ Your Liked Images
+           Your Liked Images
         </p>
       </div>
 

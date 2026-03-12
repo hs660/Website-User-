@@ -42,7 +42,7 @@ const handleLike = async () => {
 
     const data = await res.json();
 
-    //  सिर्फ count sync
+    //   count sync
     setLikeCount(data.likesCount);
 
     // liked page remove
