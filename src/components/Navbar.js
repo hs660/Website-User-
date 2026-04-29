@@ -9,11 +9,16 @@ import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-
+ const [search, setSearch] = useState("");
   const [user, setUser] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-
+const handleSearch = (e) => {
+  if (e.key === "Enter" && search.trim()) {
+    router.push(`/?search=${search}`);
+    setMenuOpen(false); // mobile menu close
+  }
+};
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -33,6 +38,28 @@ export default function Navbar() {
         </h1>
 
         {/* Desktop Menu */}
+        {/* 🔍 SEARCH BAR (Desktop) */}
+<div className="hidden md:flex items-center border rounded-lg px-3 py-1 bg-gray-50">
+  <input
+    type="text"
+    placeholder="Search images..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    onKeyDown={handleSearch}
+    className="bg-transparent outline-none text-sm px-2"
+  />
+</div>
+{/* 🔍 SEARCH BAR (Mobile) */}
+<div className="flex items-center border rounded-lg px-3 py-2 bg-gray-50">
+  <input
+    type="text"
+    placeholder="Search images..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    onKeyDown={handleSearch}
+    className="bg-transparent outline-none w-full"
+  />
+</div>
         <div className="hidden md:flex items-center gap-6 text-gray-600 font-medium">
 
           <Link href="/"
