@@ -50,7 +50,7 @@ const handleSearch = (e) => {
   />
 </div>
 {/* 🔍 SEARCH BAR (Mobile) */}
-<div className="flex items-center border rounded-lg px-3 py-2 bg-gray-50">
+<div className="md:hidden flex items-center border rounded-lg px-3 py-2 bg-gray-50">
   <input
     type="text"
     placeholder="Search images..."
