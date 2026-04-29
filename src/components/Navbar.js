@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import LoginButton from "./LoginButton";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
 
   const [user, setUser] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -26,18 +28,23 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
 
         {/* Logo */}
-        <h1 className="text-xl md:text-2xl font-bold text-gray-800">
+        <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
           Image Gallery
         </h1>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6 text-gray-600 font-medium">
 
-          <Link href="/" className="hover:text-red-500">
+          <Link href="/"
+            className={`hover:text-red-500 ${pathname === "/" ? "text-red-500 font-semibold" : ""
+              }`}
+          >
             Home
           </Link>
 
-          <Link href="/?sort=popular" className="hover:text-red-500">
+          <Link href="/?sort=popular" 
+          className="hover:text-red-500"
+          >
             Popular
           </Link>
 

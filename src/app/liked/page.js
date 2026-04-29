@@ -58,7 +58,6 @@ export default function LikedPage() {
 
 }, []);
 
-
   // const handleUnlike = (imageId) => {
   //   setImages(prev =>
   //     prev.filter(img => img._id !== imageId)
