@@ -10,6 +10,8 @@ export default function HomeContent() {
 
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedSort, setSelectedSort] = useState(sort || "latest");
+    const [selectedTag, setSelectedTag] = useState("all");
 
     const searchParams = useSearchParams();
     const sort = searchParams.get("sort") || "home";
