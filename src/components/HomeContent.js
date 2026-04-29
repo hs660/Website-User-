@@ -18,41 +18,40 @@ export default function HomeContent() {
 
     const Base_URL = process.env.NEXT_PUBLIC_API_URL;
 
-    useEffect(() => {
+  useEffect(() => {
 
-        const auth = getAuth();
+    const auth = getAuth();
 
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
 
-            try {
+        try {
+            setLoading(true);
 
-                setLoading(true);
+            let headers = {};
 
-                let headers = {};
-
-                if (user) {
-                    const token = await user.getIdToken();
-                    headers.Authorization = `Bearer ${token}`;
-                }
-
-                const res = await axios.get(
-                    `${Base_URL}/api/images?sort=${sort}`,
-                    { headers }
-                );
-
-                setImages(res.data);
-
-            } catch (error) {
-                console.error("Fetch error:", error);
-            } finally {
-                setLoading(false);
+            if (user) {
+                const token = await user.getIdToken();
+                headers.Authorization = `Bearer ${token}`;
             }
 
-        });
+            const res = await axios.get(
+                `${Base_URL}/api/images?sort=${selectedSort}&tag=${selectedTag}`,
+                { headers }
+            );
 
-        return () => unsubscribe();
+            setImages(res.data);
 
-    }, [sort]);
+        } catch (error) {
+            console.error("Fetch error:", error);
+        } finally {
+            setLoading(false);
+        }
+
+    });
+
+    return () => unsubscribe();
+
+}, [selectedSort, selectedTag]);
     const getTitle = () => {
 
         if (sort === "popular") {
