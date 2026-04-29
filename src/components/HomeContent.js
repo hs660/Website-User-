@@ -8,15 +8,14 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function HomeContent() {
 
-    const [images, setImages] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [selectedSort, setSelectedSort] = useState(sort || "latest");
-    const [selectedTag, setSelectedTag] = useState("all");
+   const [images, setImages] = useState([]);
+const [loading, setLoading] = useState(true);
 
-    const searchParams = useSearchParams();
-    const sort = searchParams.get("sort") || "home";
+const searchParams = useSearchParams();
+const sort = searchParams.get("sort") || "latest";
 
-    const Base_URL = process.env.NEXT_PUBLIC_API_URL;
+const [selectedSort, setSelectedSort] = useState(sort);
+const [selectedTag, setSelectedTag] = useState("all");
 
   useEffect(() => {
 
@@ -54,7 +53,7 @@ export default function HomeContent() {
 }, [selectedSort, selectedTag]);
     const getTitle = () => {
 
-        if (sort === "popular") {
+        if (selectedSort === "popular") {
             return (
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-800">
@@ -67,7 +66,7 @@ export default function HomeContent() {
             );
         }
 
-        if (sort === "latest") {
+        if (selectedSort === "latest") {
             return (
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-800">
@@ -80,7 +79,7 @@ export default function HomeContent() {
             );
         }
 
-        if (sort === "oldest") {
+        if (selectedSort === "oldest") {
             return (
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold text-gray-800">
