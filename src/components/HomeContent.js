@@ -114,6 +114,49 @@ export default function HomeContent() {
     return (
         <section className="max-w-7xl mx-auto py-10 px-4">
             {getTitle()}
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+
+                {/* SORT */}
+                <div className="flex items-center gap-3">
+                    <span className="text-gray-700 font-medium">Sort by:</span>
+
+                    <select
+                        value={selectedSort}
+                        onChange={(e) => setSelectedSort(e.target.value)}
+                        className="border px-3 py-2 rounded-lg focus:outline-none"
+                    >
+                        <option value="latest">Latest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="popular">Popular</option>
+                    </select>
+                </div>
+
+                {/* FILTER BY TAGS */}
+                <div className="flex items-center gap-3">
+                    <span className="text-gray-700 font-medium">Filter by tags:</span>
+
+                    <select
+                        value={selectedTag}
+                        onChange={(e) => setSelectedTag(e.target.value)}
+                        className="border px-3 py-2 rounded-lg focus:outline-none"
+                    >
+                        <option value="all">All</option>
+                        <option value="nature">Nature</option>
+                        <option value="technology">Technology</option>
+                        <option value="travel">Travel</option>
+                        <option value="food">Food</option>
+                    </select>
+                </div>
+
+                {/* REFRESH BUTTON */}
+                <button
+                    onClick={() => window.location.reload()}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition"
+                >
+                    Refresh
+                </button>
+
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
                 {images?.map((img) => (
