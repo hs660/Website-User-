@@ -78,21 +78,21 @@ export default function LikedPage() {
   return (
     <section className="max-w-7xl mx-auto py-10 px-4">
 
-      <div className="mb-1 text-center">
+      <div className="mb-1">
         <h1 className="text-3xl font-bold text-gray-800">
-          Your Liked Images
+          Your Liked <span className="text-xl md:text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Images</span>
         </h1>
       </div>
 
       {images.length === 0 ? (
         <p className="text-slate-800 text-center mt-10">
-          You haven't liked any images yet.
+          You have not liked any images yet.
         </p>
       ) : (
         <div className="mb-8 text-center">
           <p className="text-gray-500 mb-4">
-            All the images you loved are saved here.
-            Revisit your favorite moments anytime.
+            All the images you loved are saved here and
+            revisit your favorite moments anytime.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {images.map((img) => (

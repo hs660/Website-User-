@@ -56,7 +56,7 @@ export default function HomeContent() {
 
         if (sort === "popular") {
             return (
-                <div className="mb-8 text-center">
+                <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-800">
                         Popular <span className="text-xl md:text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Images</span>
                     </h1>
@@ -69,7 +69,7 @@ export default function HomeContent() {
 
         if (sort === "latest") {
             return (
-                <div className="mb-8 text-center">
+                <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-800">
                         Latest <span className="text-xl md:text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Uploads</span>
                     </h1>
