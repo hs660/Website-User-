@@ -164,11 +164,12 @@ export default function ImageCard({ image, onUnlike = null }) {
 
           {/* SMALL DOWNLOAD (Mobile friendly) */}
           <div className="flex items-center justify-between pt-2">
-            <ArrowDownToLine/>
+            
           <button
             onClick={handleDownload}
             className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition"
           >
+            <ArrowDownToLine/>
             Download
           </button>
           </div>
