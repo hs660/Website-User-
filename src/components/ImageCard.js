@@ -11,6 +11,13 @@ export default function ImageCard({ image, onUnlike = null }) {
   const [loading, setLoading] = useState(false);
 
   const Base_URL = process.env.NEXT_PUBLIC_API_URL;
+  const getTagColor = (tag) => {
+    let hash = 0;
+    for (let i = 0; i < tag.length; i++) {
+      hash = tag.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return tagColors[Math.abs(hash) % tagColors.length];
+  }
   const handleDownload = async () => {
     try {
       const response = await fetch(image.imageUrl);
