@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
-import { Heart } from "lucide-react";
+import { Heart, ArrowDownToLine } from "lucide-react";
 
 export default function ImageCard({ image, onUnlike = null }) {
 
@@ -115,13 +115,6 @@ export default function ImageCard({ image, onUnlike = null }) {
           className="w-full h-52 object-cover transition duration-500 group-hover:scale-110 cursor-pointer"
         />
 
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-          <span className="text-white text-sm bg-black/50 px-4 py-1 rounded-full">
-            Double Tap ❤️
-          </span>
-        </div>
-
         {/* Download Button (Top Right) */}
         <button
           onClick={handleDownload}
@@ -170,12 +163,15 @@ export default function ImageCard({ image, onUnlike = null }) {
           </button>
 
           {/* SMALL DOWNLOAD (Mobile friendly) */}
+          <div className="flex items-center justify-between pt-2">
+            <ArrowDownToLine/>
           <button
             onClick={handleDownload}
             className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition"
           >
             Download
           </button>
+          </div>
 
         </div>
 
