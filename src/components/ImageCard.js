@@ -9,7 +9,18 @@ export default function ImageCard({ image, onUnlike = null }) {
   const [isLiked, setIsLiked] = useState(image?.isLiked || false);
   const [likeCount, setLikeCount] = useState(image?.likesCount || 0);
   const [loading, setLoading] = useState(false);
-
+   const tagColors = [
+    "bg-blue-500",
+    "bg-indigo-500",
+    "bg-purple-500",
+    "bg-pink-500",
+    "bg-rose-500",
+    "bg-emerald-500",
+    "bg-teal-500",
+    "bg-cyan-500",
+    "bg-amber-500",
+    "bg-orange-500",
+  ];
   const Base_URL = process.env.NEXT_PUBLIC_API_URL;
   const getTagColor = (tag) => {
     let hash = 0;
