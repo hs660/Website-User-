@@ -9,7 +9,7 @@ export default function ImageCard({ image, onUnlike = null }) {
   const [isLiked, setIsLiked] = useState(image?.isLiked || false);
   const [likeCount, setLikeCount] = useState(image?.likesCount || 0);
   const [loading, setLoading] = useState(false);
-   const tagColors = [
+  const tagColors = [
     "bg-blue-500",
     "bg-indigo-500",
     "bg-purple-500",
@@ -103,81 +103,81 @@ export default function ImageCard({ image, onUnlike = null }) {
   };
 
   return (
-  <div>
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+    <div>
+      <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
 
-      {/* IMAGE */}
-      <div className="relative overflow-hidden">
-        <img
-          src={image.imageUrl}
-          alt={image.title}
-          onDoubleClick={handleLike}
-          className="w-full h-52 object-cover transition duration-500 group-hover:scale-110 cursor-pointer"
-        />
+        {/* IMAGE */}
+        <div className="relative overflow-hidden">
+          <img
+            src={image.imageUrl}
+            alt={image.title}
+            onDoubleClick={handleLike}
+            className="w-full h-52 object-cover transition duration-500 group-hover:scale-110 cursor-pointer"
+          />
 
-        {/* Download Button (Top Right) */}
-        <button
-          onClick={handleDownload}
-          className="absolute top-3 right-3 bg-white/80 backdrop-blur px-3 py-1 rounded-full text-xs font-medium text-gray-800 hover:bg-white transition opacity-0 group-hover:opacity-100"
-        >
-          ⬇ Download
-        </button>
-
-      </div>
-
-      {/* CONTENT */}
-      <div className="p-4 space-y-3">
-
-        {/* TITLE */}
-        <h3 className="text-lg font-semibold text-gray-800 line-clamp-1">
-          {image.title}
-        </h3>
-
-        {/* TAG */}
-        {image.tags && (
-          <span
-            className={`inline-block text-xs px-3 py-1 rounded-full text-white font-medium shadow ${getTagColor(image.tags)}`}
-          >
-            #{image.tags}
-          </span>
-        )}
-
-        {/* BOTTOM */}
-        <div className="flex items-center justify-between pt-2">
-
-          {/* LIKE */}
-          <button
-            onClick={handleLike}
-            className="flex items-center gap-2 group"
-          >
-            <Heart
-              className={`w-5 h-5 transition-all duration-300 ${
-                isLiked
-                  ? "text-red-500 fill-red-500 scale-125"
-                  : "text-gray-600 group-hover:text-red-400"
-              }`}
-            />
-            <span className="text-sm font-medium text-gray-700">
-              {likeCount}
-            </span>
-          </button>
-
-          {/* SMALL DOWNLOAD (Mobile friendly) */}
-          <div className="flex items-center justify-between pt-2">
-            
+          {/* Download Button (Top Right) */}
           <button
             onClick={handleDownload}
-            className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition"
+            className="absolute top-3 right-3 bg-white/80 backdrop-blur px-3 py-1 rounded-full text-xs font-medium text-gray-800 hover:bg-white transition opacity-0 group-hover:opacity-100"
           >
-            <ArrowDownToLine/>
-            Download
+            ⬇ Download
           </button>
-          </div>
 
         </div>
 
+        {/* CONTENT */}
+        <div className="p-4 space-y-3">
+
+          {/* TITLE */}
+          <h3 className="text-lg font-semibold text-gray-800 line-clamp-1">
+            {image.title}
+          </h3>
+
+          {/* TAG */}
+          {image.tags && (
+            <span
+              className={`inline-block text-xs px-3 py-1 rounded-full text-white font-medium shadow ${getTagColor(image.tags)}`}
+            >
+              #{image.tags}
+            </span>
+          )}
+
+          {/* BOTTOM */}
+          <div className="flex items-center justify-between pt-2">
+
+            {/* LIKE */}
+            <button
+              onClick={handleLike}
+              className="flex items-center gap-2 group"
+            >
+              <Heart
+                className={`w-5 h-5 transition-all duration-300 ${isLiked
+                    ? "text-red-500 fill-red-500 scale-125"
+                    : "text-gray-600 group-hover:text-red-400"
+                  }`}
+              />
+              <span className="text-sm font-medium text-gray-700">
+                {likeCount}
+              </span>
+            </button>
+
+            {/* SMALL DOWNLOAD (Mobile friendly) */}
+            <div className="flex items-center justify-between pt-2">
+
+              <button
+                onClick={handleDownload}
+                className="flex items-center gap-1 text-xs px-3 py-1.5 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition"
+              >
+                <ArrowDownToLine className="w-4 h-4" />
+                <span>Download</span>
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 }
