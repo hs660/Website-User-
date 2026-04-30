@@ -104,7 +104,15 @@ export default function ImageCard({ image, onUnlike = null }) {
             </span>
 
           </button>
-
+          <a
+  href={img.imageUrl}
+  download
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded"
+>
+  Download
+</a>
         </div>
       </div>
     </div>
