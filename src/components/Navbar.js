@@ -7,7 +7,7 @@ import LoginButton from "./LoginButton";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
-import AppLogo from "AppLogo.png"
+import Image from "next/image";
 
 export default function Navbar() {
   const [search, setSearch] = useState("");
@@ -39,7 +39,7 @@ export default function Navbar() {
 
           {/* Logo Image (aap yaha apni image daal dena) */}
           <img
-            src={AppLogo}   // 👈 yaha apna logo path dalna
+            src="/AppLogo.png"   // 👈 yaha apna logo path dalna
             alt="Pixora Logo"
             className="w-8 h-8 md:w-10 md:h-10 object-contain"
           />
