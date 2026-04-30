@@ -57,7 +57,7 @@ export default function HomeContent() {
             return (
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold text-gray-800">
-                        Popular Images
+                        Popular <span className="text-xl md:text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Images</span>
                     </h1>
                     <p className="text-gray-500 mt-2">
                         Most liked images by the community
@@ -70,7 +70,7 @@ export default function HomeContent() {
             return (
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold text-gray-800">
-                        Latest Uploads
+                        Latest <span className="text-xl md:text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Uploads</span>
                     </h1>
                     <p className="text-gray-500 mt-2">
                         See the newest images added recently
