@@ -103,61 +103,84 @@ export default function ImageCard({ image, onUnlike = null }) {
   };
 
   return (
-    <div>
-      <div className="bg-white rounded-xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+  <div>
+    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
 
-        <div className="relative group overflow-hidden rounded-xl">
-          <img
-            src={image.imageUrl}
-            alt={image.title}
-            onDoubleClick={handleLike}
-            className="w-full h-48 object-cover transform group-hover:scale-110 transition duration-300"
-          />
+      {/* IMAGE */}
+      <div className="relative overflow-hidden">
+        <img
+          src={image.imageUrl}
+          alt={image.title}
+          onDoubleClick={handleLike}
+          className="w-full h-52 object-cover transition duration-500 group-hover:scale-110 cursor-pointer"
+        />
 
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition duration-300"></div>
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+          <span className="text-white text-sm bg-black/50 px-4 py-1 rounded-full">
+            Double Tap ❤️
+          </span>
         </div>
 
-        <div className="p-4">
+        {/* Download Button (Top Right) */}
+        <button
+          onClick={handleDownload}
+          className="absolute top-3 right-3 bg-white/80 backdrop-blur px-3 py-1 rounded-full text-xs font-medium text-gray-800 hover:bg-white transition opacity-0 group-hover:opacity-100"
+        >
+          ⬇ Download
+        </button>
 
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">
-            {image.title}
-          </h3>
-          {/* TAGS */}
-          <div className="flex flex-wrap gap-2">
-            {image.tags && (
-              <span
-                className={`text-xs px-3 py-1 rounded-full text-white font-medium shadow-sm ${getTagColor(image.tags)}`}
-              >
-                {image.tags}
-              </span>
-            )}
-          </div>
+      </div>
+
+      {/* CONTENT */}
+      <div className="p-4 space-y-3">
+
+        {/* TITLE */}
+        <h3 className="text-lg font-semibold text-gray-800 line-clamp-1">
+          {image.title}
+        </h3>
+
+        {/* TAG */}
+        {image.tags && (
+          <span
+            className={`inline-block text-xs px-3 py-1 rounded-full text-white font-medium shadow ${getTagColor(image.tags)}`}
+          >
+            #{image.tags}
+          </span>
+        )}
+
+        {/* BOTTOM */}
+        <div className="flex items-center justify-between pt-2">
+
+          {/* LIKE */}
           <button
             onClick={handleLike}
-
-            className="flex items-center gap-2 transition-colors group"
+            className="flex items-center gap-2 group"
           >
-
             <Heart
-              className={`w-6 h-6 transition-all duration-300 ${isLiked
-                ? "text-red-500 fill-red-500 scale-125"
-                : "text-gray-600 group-hover:text-red-400"
-                }`}
+              className={`w-5 h-5 transition-all duration-300 ${
+                isLiked
+                  ? "text-red-500 fill-red-500 scale-125"
+                  : "text-gray-600 group-hover:text-red-400"
+              }`}
             />
-
-            <span className="text-sm font-medium">
+            <span className="text-sm font-medium text-gray-700">
               {likeCount}
             </span>
-
           </button>
+
+          {/* SMALL DOWNLOAD (Mobile friendly) */}
           <button
             onClick={handleDownload}
-            className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded"
+            className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition"
           >
             Download
           </button>
+
         </div>
+
       </div>
     </div>
-  );
+  </div>
+);
 }
