@@ -18,12 +18,32 @@ export default function ImageCard({ image, onUnlike = null }) {
 
     const auth = getAuth();
     const currentUser = auth.currentUser;
-
+ 
     if (!currentUser) {
       alert("Please login to like this image");
       return;
     }
+const handleDownload = async () => {
+  try {
+    const response = await fetch(image.imageUrl);
+    const blob = await response.blob();
 
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = image.title || "image.jpg";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    window.URL.revokeObjectURL(url);
+
+  } catch (error) {
+    console.error("Download failed", error);
+  }
+};
     const previousLiked = isLiked;
 
     //  instant UI
@@ -104,15 +124,12 @@ export default function ImageCard({ image, onUnlike = null }) {
             </span>
 
           </button>
-          <a
-            href={image.imageUrl}
-            download
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded"
-          >
-            Download
-          </a>
+          <button
+  onClick={handleDownload}
+  className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded"
+>
+  Download
+</button>
         </div>
       </div>
     </div>
