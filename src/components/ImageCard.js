@@ -11,18 +11,6 @@ export default function ImageCard({ image, onUnlike = null }) {
   const [loading, setLoading] = useState(false);
 
   const Base_URL = process.env.NEXT_PUBLIC_API_URL;
-
-  const handleLike = async () => {
-
-    if (loading) return;
-
-    const auth = getAuth();
-    const currentUser = auth.currentUser;
- 
-    if (!currentUser) {
-      alert("Please login to like this image");
-      return;
-    }
 const handleDownload = async () => {
   try {
     const response = await fetch(image.imageUrl);
@@ -44,6 +32,17 @@ const handleDownload = async () => {
     console.error("Download failed", error);
   }
 };
+  const handleLike = async () => {
+
+    if (loading) return;
+
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+ 
+    if (!currentUser) {
+      alert("Please login to like this image");
+      return;
+    }
     const previousLiked = isLiked;
 
     //  instant UI
