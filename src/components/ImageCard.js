@@ -94,8 +94,8 @@ export default function ImageCard({ image, onUnlike = null }) {
 
             <Heart
               className={`w-6 h-6 transition-all duration-300 ${isLiked
-                  ? "text-red-500 fill-red-500 scale-125"
-                  : "text-gray-600 group-hover:text-red-400"
+                ? "text-red-500 fill-red-500 scale-125"
+                : "text-gray-600 group-hover:text-red-400"
                 }`}
             />
 
@@ -105,14 +105,14 @@ export default function ImageCard({ image, onUnlike = null }) {
 
           </button>
           <a
-  href={img.imageUrl}
-  download
-  target="_blank"
-  rel="noopener noreferrer"
-  className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded"
->
-  Download
-</a>
+            href={image.imageUrl}
+            download
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded"
+          >
+            Download
+          </a>
         </div>
       </div>
     </div>
