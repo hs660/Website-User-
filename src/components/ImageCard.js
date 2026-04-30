@@ -115,7 +115,7 @@ export default function ImageCard({ image, onUnlike = null }) {
           <div className="flex flex-wrap gap-2">
             {image.tags && (
               <span
-                className={`text-xs px-3 py-1 rounded-full text-white font-medium shadow-sm ${getTagColor(img.tags)}`}
+                className={`text-xs px-3 py-1 rounded-full text-white font-medium shadow-sm ${getTagColor(image.tags)}`}
               >
                 {image.tags}
               </span>
