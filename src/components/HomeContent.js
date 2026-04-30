@@ -6,6 +6,7 @@ import ImageCard from "@/components/ImageCard";
 import { useSearchParams } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
+
 export default function HomeContent() {
 
     const [images, setImages] = useState([]);
