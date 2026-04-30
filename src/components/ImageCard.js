@@ -11,34 +11,34 @@ export default function ImageCard({ image, onUnlike = null }) {
   const [loading, setLoading] = useState(false);
 
   const Base_URL = process.env.NEXT_PUBLIC_API_URL;
-const handleDownload = async () => {
-  try {
-    const response = await fetch(image.imageUrl);
-    const blob = await response.blob();
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(image.imageUrl);
+      const blob = await response.blob();
 
-    const url = window.URL.createObjectURL(blob);
+      const url = window.URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = image.title || "image.jpg";
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = image.title || "image.jpg";
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-    window.URL.revokeObjectURL(url);
+      window.URL.revokeObjectURL(url);
 
-  } catch (error) {
-    console.error("Download failed", error);
-  }
-};
+    } catch (error) {
+      console.error("Download failed", error);
+    }
+  };
   const handleLike = async () => {
 
     if (loading) return;
 
     const auth = getAuth();
     const currentUser = auth.currentUser;
- 
+
     if (!currentUser) {
       alert("Please login to like this image");
       return;
@@ -104,7 +104,16 @@ const handleDownload = async () => {
           <h3 className="text-lg font-semibold text-gray-800 mb-3">
             {image.title}
           </h3>
-
+          {/* TAGS */}
+          <div className="flex flex-wrap gap-2">
+            {image.tags && (
+              <span
+                className={`text-xs px-3 py-1 rounded-full text-white font-medium shadow-sm ${getTagColor(img.tags)}`}
+              >
+                {image.tags}
+              </span>
+            )}
+          </div>
           <button
             onClick={handleLike}
 
@@ -124,11 +133,11 @@ const handleDownload = async () => {
 
           </button>
           <button
-  onClick={handleDownload}
-  className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded"
->
-  Download
-</button>
+            onClick={handleDownload}
+            className="text-xs px-3 py-1 bg-green-100 text-green-600 rounded"
+          >
+            Download
+          </button>
         </div>
       </div>
     </div>

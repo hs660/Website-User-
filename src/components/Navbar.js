@@ -141,16 +141,13 @@ export default function Navbar() {
           <Link href="/?sort=latest" onClick={() => setMenuOpen(false)} className="py-1 hover:text-red-500 active:text-red-500">
             Latest
           </Link>
-
           {user && (
             <Link href="/liked" onClick={() => setMenuOpen(false)} className="py-1 hover:text-red-500 active:text-red-500">
               Liked
             </Link>
           )}
-
         </div>
       )}
-
     </nav>
   );
 }
