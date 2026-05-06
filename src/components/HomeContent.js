@@ -5,124 +5,82 @@ import axios from "axios";
 import ImageCard from "@/components/ImageCard";
 import { useSearchParams } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
+import FilterBar from "@/components/FilterTag";
 
 export default function HomeContent() {
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const [images, setImages] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
 
-    const searchParams = useSearchParams();
-    const sort = searchParams.get("sort") || "home";
+  const sort = searchParams.get("sort") || "latest";
+  const tag = searchParams.get("tag") || "all";
 
-    const Base_URL = process.env.NEXT_PUBLIC_API_URL;
+  const Base_URL = process.env.NEXT_PUBLIC_API_URL;
 
-    useEffect(() => {
+  useEffect(() => {
+    const auth = getAuth();
 
-        const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      try {
+        setLoading(true);
 
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        let headers = {};
 
-            try {
-
-                setLoading(true);
-
-                let headers = {};
-
-                if (user) {
-                    const token = await user.getIdToken();
-                    headers.Authorization = `Bearer ${token}`;
-                }
-
-                const res = await axios.get(
-                    `${Base_URL}/api/images?sort=${sort}`,
-                    { headers }
-                );
-
-                setImages(res.data);
-
-            } catch (error) {
-                console.error("Fetch error:", error);
-            } finally {
-                setLoading(false);
-            }
-
-        });
-
-        return () => unsubscribe();
-
-    }, [sort]);
-    const getTitle = () => {
-
-        if (sort === "popular") {
-            return (
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800">
-                        Popular <span className="text-xl md:text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Images</span>
-                    </h1>
-                    <p className="text-gray-500 mt-2">
-                        Most liked images by the community
-                    </p>
-                </div>
-            );
+        if (user) {
+          const token = await user.getIdToken();
+          headers.Authorization = `Bearer ${token}`;
         }
 
-        if (sort === "latest") {
-            return (
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800">
-                        Latest <span className="text-xl md:text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Uploads</span>
-                    </h1>
-                    <p className="text-gray-500 mt-2">
-                        See the newest images added recently
-                    </p>
-                </div>
-            );
-        }
-
-        if (sort === "oldest") {
-            return (
-                <div className="mb-8 text-center">
-                    <h1 className="text-3xl font-bold text-gray-800">
-                        Oldest Images
-                    </h1>
-                    <p className="text-gray-500 mt-2">
-                        Browse images uploaded earlier
-                    </p>
-                </div>
-            );
-        }
-
-        return (
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-800">
-                    Discover <span className="text-xl md:text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Amazing</span>  Images
-                </h1>
-                <p className="text-gray-500 mt-2">
-                    Browse amazing photos uploaded by our community
-                </p>
-            </div>
+        // 🔥 API CALL with tag + sort
+        const res = await axios.get(
+          `${Base_URL}/api/images?sort=${sort}&tag=${tag}`,
+          { headers }
         );
-    };
-    if (loading) {
-        return (
-            <div className="flex justify-center items-center h-[60vh]">
-                <p className="text-slate-900 text-lg">Loading images...</p>
-            </div>
-        );
-    }
 
+        setImages(res.data);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [sort, tag]);
+
+  if (loading) {
     return (
-        <section className="max-w-7xl mx-auto py-10 px-4">
-            {getTitle()}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-                {images?.map((img) => (
-                    <ImageCard key={img._id} image={img} />
-                ))}
-
-            </div>
-
-        </section>
+      <div className="flex justify-center items-center h-[60vh]">
+        <p className="text-slate-900 text-lg">Loading images...</p>
+      </div>
     );
+  }
+
+  return (
+    <section className="max-w-7xl mx-auto py-10 px-4">
+      
+      {/* TITLE */}
+      <h1 className="text-3xl font-bold text-gray-800 mb-2">
+        Discover{" "}
+        <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+          Amazing
+        </span>{" "}
+        Images
+      </h1>
+      <p className="text-gray-500 mb-6">
+        Explore, like and collect your favorite images
+      </p>
+
+      {/* 🔥 FILTER BAR */}
+      <FilterBar />
+
+      {/* IMAGES */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {images?.map((img) => (
+          <ImageCard key={img._id} image={img} />
+        ))}
+      </div>
+    </section>
+  );
 }
