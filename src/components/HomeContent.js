@@ -15,6 +15,7 @@ export default function HomeContent() {
 
   const sort = searchParams.get("sort") || "latest";
   const tag = searchParams.get("tag") || "all";
+  console.log(tag);
 
   const Base_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -37,7 +38,7 @@ export default function HomeContent() {
           `${Base_URL}/api/images?sort=${sort}&tag=${tag}`,
           { headers }
         );
-
+       
         setImages(res.data);
       } catch (error) {
         console.error("Fetch error:", error);
