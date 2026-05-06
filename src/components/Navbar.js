@@ -96,6 +96,9 @@ export default function Navbar() {
           {user && (
             <Link href="/liked" className="hover:text-red-500">
               Liked
+            </Link>,
+            <Link href="/upload" className="hover:text-red-500">
+              Upload
             </Link>
           )}
 
