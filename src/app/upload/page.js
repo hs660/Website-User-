@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
+import axios from "../../../utils/api.js";
 import { getAuth } from "firebase/auth";
 
 export default function UploadPage() {
