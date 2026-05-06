@@ -8,6 +8,8 @@ const tags = [
   "technology",
   "travel",
   "cars",
+  "Fruits",
+  "Bio Fuel",
   "architecture",
   "animals",
   "art",
@@ -36,7 +38,7 @@ export default function FilterBar() {
       <div className="flex items-center gap-4 flex-wrap">
 
         {/* SORT DROPDOWN */}
-        <select
+        {/* <select
           value={currentSort}
           onChange={(e) => updateQuery(currentTag, e.target.value)}
           className="border rounded-lg px-3 py-2 text-sm text-gray-600"
@@ -44,7 +46,7 @@ export default function FilterBar() {
           <option value="latest">Latest</option>
           <option value="popular">Popular</option>
           <option value="oldest">Oldest</option>
-        </select>
+        </select> */}
 
         {/* TAGS */}
         <div className="flex flex-wrap gap-2">
