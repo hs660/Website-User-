@@ -13,6 +13,7 @@ const tags = [
   "architecture",
   "animals",
   "art",
+  "Historical Monuments",
 ];
 
 export default function FilterBar() {
