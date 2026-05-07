@@ -102,14 +102,6 @@ export default function Navbar() {
               >
                 Liked
               </Link>
-
-              <Link
-                href="/upload"
-                onClick={() => setMenuOpen(false)}
-                className="py-1 hover:text-red-500 active:text-red-500"
-              >
-                Upload
-              </Link>
             </>
           )}
 
